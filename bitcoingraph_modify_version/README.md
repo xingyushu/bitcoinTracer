@@ -60,12 +60,20 @@ When you reached this point, your Bitcoin Core setup is working. Terminate all r
 
     bitcoind -daemon -rest
 
+#####  注意： ”bitcoind  > = 0.16.0的话需要对源码进行以下修改： 
+In bitcoingraph/bitcoingraph.py on line 53 getinfo is called.
+```
+   getinfo()  ==> getcount()
+```
+
 
 ### Bitcoingraph library setup
 
 Bitcoingraph is being developed in Python 3.4. Make sure it is running on your machine:
 
     python --version
+
+ > = python 3.4
 
 
 Now clone Bitcoingraph...
