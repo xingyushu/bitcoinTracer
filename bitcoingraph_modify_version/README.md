@@ -1,4 +1,4 @@
-Bitcoingraph - A Python library for exploring the Bitcoin transaction graph.
+Bitcoingraph - A Python library for exploring the Bitcoin transaction graph.  <br/>
 ########  对源代码进行了相关修改，兼容自己的需求
 
 [![Build Status](https://travis-ci.org/behas/bitcoingraph.svg?branch=master)](https://travis-ci.org/behas/bitcoingraph)
@@ -221,9 +221,3 @@ Bitcoingraph provides a synchronisation script, which reads blocks from bitcoind
 
     bcgraph-synchronize -s localhost -u RPC_USER -p RPC_PASS -S localhost -U NEO4J_USER -P NEO4J_PASS --rest
 
-
-## License
-
-[bc_core]: https://github.com/bitcoin/bitcoin "Bitcoin Core"
-[bc_conf]: https://en.bitcoin.it/wiki/Running_Bitcoin#Bitcoin.conf_Configuration_File "Bitcoin Core configuration file"
-[neo4j]: http://neo4j.com/ "Neo4J"
