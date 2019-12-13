@@ -109,14 +109,14 @@ Bitcoingraph provides the `bcgraph-export` tool for exporting transactions in a 
 
 The following CSV files are created (with separate header files):
 
-* addresses.csv: sorted list of Bitcoin addressed
-* blocks.csv: list of blocks (hash, height, timestamp)
-* transactions.csv: list of transactions (hash, coinbase/non-coinbase)
-* outputs.csv: list of transaction outputs (output key, id, value, script type)
-* rel_block_tx.csv: relationship between blocks and transactions (block_hash, tx_hash)
-* rel_input.csv: relationship between transactions and transaction outputs (tx_hash, output key)
-* rel_output_address.csv: relationship between outputs and addresses (output key, address)
-* rel_tx_output.csv: relationship between transactions and transaction outputs (tx_hash, output key)
+* addresses.csv: sorted list of Bitcoin addressed  比特币地址的列表
+* blocks.csv: list of blocks (hash, height, timestamp)  区块列表：哈希/高度/时间戳
+* transactions.csv: list of transactions (hash, coinbase/non-coinbase)  交易列表：哈希/（创币/非创币）
+* outputs.csv: list of transaction outputs (output key, id, value, script type)  交易输出数据（输出公钥，id，金额，脚本类型）
+* rel_block_tx.csv: relationship between blocks and transactions (block_hash, tx_hash) 区块和交易的关系（区块哈希，交易哈希）
+* rel_input.csv: relationship between transactions and transaction outputs (tx_hash, output key) 交易和交易输出的关系（交易哈希，输出key)
+* rel_output_address.csv: relationship between outputs and addresses (output key, address)  交易输出和地址的关系(交易公钥，地址）
+* rel_tx_output.csv: relationship of transactions & transaction outputs (tx_hash, output key) 交易和交易输出的关系（交易哈希，输出公钥）
 
 
 ### Step 2: Compute entities over transaction dump
@@ -127,8 +127,8 @@ The following command computes entities for a given blockchain data dump:
 
 Two additional files are created:
 
-* entities.csv: list of entity identifiers (entity_id)
-* rel_address_entity.csv: assignment of addresses to entities (address, entity_id)
+* entities.csv: list of entity identifiers (entity_id)  实体
+* rel_address_entity.csv: assignment of addresses to entities (address, entity_id)  实体地址
 
 ########  blocks_0_1000  -  为导出的数据csv格式
 
