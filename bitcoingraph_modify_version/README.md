@@ -1,5 +1,5 @@
 Bitcoingraph - A Python library for exploring the Bitcoin transaction graph.
-
+########  对源代码进行了相关修改，兼容自己的需求
 
 [![Build Status](https://travis-ci.org/behas/bitcoingraph.svg?branch=master)](https://travis-ci.org/behas/bitcoingraph)
 
