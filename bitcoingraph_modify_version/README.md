@@ -1,5 +1,6 @@
 Bitcoingraph - A Python library for exploring the Bitcoin transaction graph.
 
+
 [![Build Status](https://travis-ci.org/behas/bitcoingraph.svg?branch=master)](https://travis-ci.org/behas/bitcoingraph)
 
 ## Prerequesites
@@ -129,6 +130,9 @@ Two additional files are created:
 * entities.csv: list of entity identifiers (entity_id)
 * rel_address_entity.csv: assignment of addresses to entities (address, entity_id)
 
+########  blocks_0_1000  -  为导出的数据csv格式
+
+
 
 ### Step 3: Ingest pre-computed dump into Neo4J
 
@@ -179,6 +183,7 @@ Finally start Neo4J
 
     $NEO4J_HOME/bin/neo4j start
 
+![实现效果](https://github.com/xingyushu/bitcoinTracer/blob/master/images/neo4j1.PNG)
 
 ### Step 4: Enrich transaction graph with identity information
 
@@ -217,15 +222,7 @@ Bitcoingraph provides a synchronisation script, which reads blocks from bitcoind
     bcgraph-synchronize -s localhost -u RPC_USER -p RPC_PASS -S localhost -U NEO4J_USER -P NEO4J_PASS --rest
 
 
-## Contributors
-
-* [Bernhard Haslhofer](mailto:bernhard.haslhofer@ait.ac.at)
-* [Roman Karl](mailto:roman.karl@ait.ac.at)
-
-
 ## License
-
-This library is release Open Source under the [MIT license](http://opensource.org/licenses/MIT).
 
 [bc_core]: https://github.com/bitcoin/bitcoin "Bitcoin Core"
 [bc_conf]: https://en.bitcoin.it/wiki/Running_Bitcoin#Bitcoin.conf_Configuration_File "Bitcoin Core configuration file"
