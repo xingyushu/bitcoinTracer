@@ -1,20 +1,21 @@
-Bitcoingraph - A Python library for exploring the Bitcoin transaction graph.  <br/>
+
+bitcoingraph_modify_version:
 通过本地RPC的方式解析比特币数据成csv格式并导入到neo4j图数据库中 <br/>
 #####  对源代码进行了相关修改，兼容自己的需求
 
 [![Build Status](https://travis-ci.org/behas/bitcoingraph.svg?branch=master)](https://travis-ci.org/behas/bitcoingraph)
 
-## Prerequesites
+## 准备
 
-### Bitcoin Core setup and configuration
+### 比特币核心客户端的安装及配置
 
-First, install the current version of Bitcoin Core (v.11.1), either from [source](https://github.com/bitcoin/bitcoin) or from a [pre-compiled executable](https://bitcoin.org/en/download).
+首先, 安装 Bitcoin Core (v.11.1),可以从 [source](https://github.com/bitcoin/bitcoin) 或者 [pre-compiled executable](https://bitcoin.org/en/download)，[京东云](https://github.com/jdcloud-bds/bds-btc)
 
-Once installed, you'll have access to three programs: `bitcoind` (= full peer), `bitcoin-qt` (= peer with GUI), and `bitcoin-cli` (RPC command line interface). The following instructions have been tested with `bitcoind` and assume you can start and run a Bitcoin Core peer as follows:
+安装之后可以使用 `bitcoind` (= 全节点), `bitcoin-qt` (= GUI 可选择不要), and `bitcoin-cli` (RPC command line interface)：
 
     bitcoind -printtoconsole
 
-Second, you must make sure that your bitcoin client accepts JSON-RPC connections by modifying the [Bitcoin Core configuration file][bc_conf] as follows:
+接着，修改配置文件bitcoin.conf(默认在/root/.bitcoin/下） [Bitcoin Core configuration file][bc_conf] 如下:
 
     # server=1 tells Bitcoin-QT to accept JSON-RPC commands.
     server=1
@@ -30,60 +31,60 @@ Second, you must make sure that your bitcoin client accepts JSON-RPC connections
     # Listen for RPC connections on this TCP port:
     rpcport=8332
 
-Test whether the JSON-RPC interface is working by starting your Bitcoin Core peer (...waiting until it finished startup...) and using the following cURL request (with adapted username and password):
+测试 JSON-RPC 接口是否能使用：
 
     curl --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getinfo", "params": [] }' -H 'content-type: text/plain;' http://your_rpcuser:your_rpcpass@localhost:8332/
 
 
-Third, since Bitcoingraph needs to access non-wallet blockchain transactions by their ids, you need to enable the transaction index in the Bitcoin Core database. This can be achieved by adding the following property to your `bitcoin.conf`
+开启比特币交易索引，不仅可以查询交易池里的交易还可以查询区块链上的交易：
+可以在 `bitcoin.conf`里添加，或者启动时候添加参数
 
     txindex=1
 
-... and restarting your Bitcoin core peer as follows (rebuilding the index can take a while):
+...重启 Bitcoin core peer:
 
     bitcoind -reindex
 
-
-Test non-wallet transaction data access by taking an arbitrary transaction id and issuing the following request using cURL:
+通过获取任意交易ID并使用CURL发出以下请求去测试非钱包交易数据访问：
 
     curl --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getrawtransaction", "params": ["110ed92f558a1e3a94976ddea5c32f030670b5c58c3cc4d857ac14d7a1547a90", 1] }' -H 'content-type: text/plain;' http://your_rpcuser:your_rpcpass@localhost:8332/
 
+最后，开启Bitcoin Core的HTTP REST接口，该接口使用以下参数启用：
 
-Finally, bitcoingraph also makes use of Bitcoin Core's HTTP REST interface, which is enabled using the following parameter:
 
     bitcoind -rest
 
-Test it using some sample block hash
+测试是否能够使用：
 
     http://localhost:8332/rest/block/000000000000000e7ad69c72afc00dc4e05fc15ae3061c47d3591d07c09f2928.json
 
 
-When you reached this point, your Bitcoin Core setup is working. Terminate all running bitcoind instances and launch a new background daemon with enabled REST interface
+完成后配置成功 终止所有正在运行的比特币实例，并启动具有启用的REST接口的新后台守护程序：
 
     bitcoind -daemon -rest
 
 #####  注意： ”bitcoind  > = 0.16.0的话需要对源码进行以下修改： 
-In bitcoingraph/bitcoingraph.py on line 53 getinfo is called.
+在 bitcoingraph/bitcoingraph.py on line 53 getinfo ：
 ```
-   getinfo()  ==> getcount()
+   getinfo()  ==> getcount()  本库已经修改完毕下载即可使用
 ```
 
 
-### Bitcoingraph library setup
+### 库安装
 
-Bitcoingraph is being developed in Python 3.4. Make sure it is running on your machine:
 
     python --version
 
- > = python 3.4
+ > = python 3.4 即可
 
 
 Now clone Bitcoingraph...
 
-    git clone https://github.com/behas/bitcoingraph.git
+git clone https://github.com/xingyushu/bitcoinTracer.git  or  <br/>
+    git clone https://github.com/behas/bitcoingraph.git (需要修改源码）
 
 
-...test and install the Bitcoingraph library:
+...测试并安装:
 
     cd bitcoingraph
     pip install -r requirements.txt
@@ -91,16 +92,16 @@ Now clone Bitcoingraph...
     python setup.py install
 
 
-### Mac OSX specifics
+### Mac OSX \
 
 Running bitcoingraph on a Mac requires coreutils to be installed
 
     homebrew install coreutils
 
 
-## Boostrapping the underlying graph database (Neo4J)
+## 解析数据到图数据库（Neo4J）
 
-bitcoingraph stores Bitcoin transactions as directed labelled graph in a Neo4J graph database instance. This database can be bootstrapped by loading an initial blockchain dump, performing entity computation over the entire dump as described by [Ron and Shamir](https://eprint.iacr.org/2012/584.pdf), and ingesting it into a running Neo4J instance.
+bitcoingraph在Neo4J图形数据库实例中将带标记的图形的比特币交易存储为定向图形。 可以通过加载初始的区块链转储，如[Ron and Shamir]（https://eprint.iacr.org/2012/584.pdf）所述，对整个转储执行实体计算来引导数据库，把它运行成Neo4J实例。
 
 ### Step 1: Create transaction dump from blockchain
 
