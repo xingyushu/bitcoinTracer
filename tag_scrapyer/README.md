@@ -1,34 +1,38 @@
-# A Scrapy-based Web Spider
+# 基于Scrapy的比特币地址爬取
 
-This is a Scrapy-based Web spider to scrawl useful information from public websites. Currently, included in the package is the case for scrawling the tags of public bitcoin addresses. In the future, more cases will be addeded. 
+这是一个基于Scrapy的爬虫，用于获取公共比特币地址标签的情况。 
 
-The web spider depends on Scrapy. On ubuntu, it can be installed as:
+安装框架：
 
     $ [sudo] pip install Scrapy
 
-The web spider is easy to use:
+学习文档：
+```
+https://scrapy-chs.readthedocs.io/zh_CN/latest/index.html
+https://scrapy.org/
+```
 
-First, go to the directory tag_spider/spiders:
+打开目录 tag_spider/spiders:
 
     $ cd tag_spider/spiders
 
-Then, running the spider: 
+然后启动: 
 
     $ ./run.sh
 
-Note: The file run.sh includes one command of Scracpy: scrapy crawl tagspider. Just for easy use.
+run.sh 包含Scracpy运行命令: scrapy crawl tagspider. 
 
 Remarks:
 
-1. The number of pipelines to scrawl the webpages can be set in the file tag_spider/settings.py:
+1. 可以在文件tag_spider / settings.py中设置爬网页的管道数。:
 
        ITEM_PIPELINES = {
            'tag_spider.pipelines.BlockSpiderPipeline': 16,
        }
 
-   The number 16 refers to the number of threads, which can be customized based on the capability of your machine.
+ 16是指线程数，可以根据计算机的功能进行自定义。
 
-2. The file that used to save the data scrawled from the website can be set in the file tag_spider/pipelines.py:
+2. 可以在文件tag_spider / pipelines.py中设置用于保存从网站抓取的数据的文件：
 
        class BlockSpiderPipeline(object):
 
@@ -36,11 +40,9 @@ Remarks:
 
                self.fp = open("data.list", "w" )
 
-   The default file is "data.list". If necessary, the data can also be saved in a database, such as mysql. 
-   This can be customized by change the underlaying storage from file to database.
+ 默认文件是“ data.list”， 如有必要，数据也可以保存在数据库中，例如mysql。 可以通过将底层存储从文件更改为数据库来进行自定义。我这里将它插入到es中
 
-3. The rules for scrawl are defined in the file tag_spider/spiders/tagspider.py
+3. 爬取得规则在文件中定义 tag_spider/spiders/tagspider.py
 
-4. More information of Scrapy can be founded at the official website https://scrapy.org/
 
 
